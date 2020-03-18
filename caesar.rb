@@ -7,17 +7,12 @@ n = gets.chomp.to_i
 puts 'mode pleas: E or D '
 mode = gets.chomp.downcase
 
-@alphabet = ('a'..'z').to_a
+@n = mode.eql?('e') ? n : n * -1
 
-def caesar_cipher(text, n)
-  key = Hash[@alphabet.zip(@alphabet.rotate(n))]
+def decode_or_encode(text)
+  alphabet = ('a'..'z').to_a
+  key = Hash[alphabet.zip(alphabet.rotate(@n))]
   text.each_char.inject('') { |newtext, char| newtext + key[char] }
 end
 
-def decaesar_cipher(text, n)
-  key = Hash[@alphabet.zip(@alphabet.rotate(-n))]
-  text.each_char.inject('') { |newtext, char| newtext + key[char] }
-end
-
-result = mode.eql?('e') ? caesar_cipher(text, n) : decaesar_cipher(text, n)
-puts result
+puts text.split(' ').map { |word| decode_or_encode(word) }.join(' ')
