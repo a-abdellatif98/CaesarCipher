@@ -12,7 +12,7 @@ mode = gets.chomp.downcase
 def decode_or_encode(text)
   alphabet = ('a'..'z').to_a
   key = Hash[alphabet.zip(alphabet.rotate(@n))]
-  text.each_char.inject('') { |newtext, char| newtext + key[char] }
+  text.each_char.inject('') { |newtext, char| newtext + (key[char].nil? ? char : key[char]) }
 end
 
-puts text.split(' ').map { |word| decode_or_encode(word) }.join(' ')
+puts decode_or_encode(text)
